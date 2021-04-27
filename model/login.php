@@ -15,13 +15,12 @@ function Login()
     // $rs = mysqli_query($conn, $query)
     //     or die(mysqli_error($conn));
     
-    echo ($query);
-    echo nl2br("\n\n");
+    // echo ($query);
+    // echo nl2br("\n\n");
 
     // echo "1";
     $result = $conn->query($query);
-    print_r($result);
-    echo nl2br("\n\n");
+    // 
     // echo($rs);
     $count = mysqli_num_rows($result);
     $row = mysqli_fetch_array($result);

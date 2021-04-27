@@ -28,7 +28,7 @@
 <body>
     <?php
     session_start();
-    if ($_SESSION['isLogin']) {
+    if ($_SESSION['isLogin'] && isset($_SESSION['useremail'])) {
         $welcomeMessage = "Welcome to the member's area, " . $_SESSION['firstname'] . "!";
     } else {
         header('Location: ./signUp/loginPage.php');

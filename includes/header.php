@@ -38,7 +38,12 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="#">Account</a></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                            <form id="form" class="form" action="./model/logout.php" method="POST">
+                                <li>
+                                    <button name="submit" type="submit" value="Login">Logout</button>
+                                </li>
+                            </form>
+                            
                             <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
                         </ul>
                     </li>
