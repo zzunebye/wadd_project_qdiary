@@ -10,15 +10,16 @@
 </head>
 
 <body>
-  <div class="container">
-    <?php
+<?php
     require_once('../model/dbconn.php');
     session_start();
+    $_SESSION['isLogin'] = 0;
     if (isset($_SESSION['useremail'])) {
-      // $welcomeMessage = "Welcome to the member's area, " . $_SESSION['useremail'] . "!";
-      // header('Location: ../home.php');
+      // echo $_SESSION['isLogin'];
     }
     ?>
+  <div class="container">
+    
     <div class="title">
       <h1>Q - Journal</h1>
     </div>
@@ -46,7 +47,7 @@
     </form>
 
   </div>
-  <!-- <script src="./signUp/script.js"></script> -->
+  <script src="./loginjs.js"></script>
 </body>
 
 </html>

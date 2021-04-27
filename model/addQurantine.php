@@ -1,112 +1,94 @@
-<!DOCTYPE html>
-<html>
-
-<head></head>
-
-<body>
-    <?php
-    session_start(); ?>
-    <p>city: <?php echo $_POST["city"]; ?></p>
-    <p>duration: <?php echo $_POST["duration"]; ?></p>
-    <p>startDate: <?php echo $_POST["startDate"]; ?></p>
-    <p>description: <?php echo $_POST["description"]; ?></p>
-</body>
-
-</html>
-
-
-<script>
-    console.log("addQurantine PAGE")
-</script>
 <?php
-var_dump($_POST, "\n\n");
-echo nl2br("\n\n");
+session_start();
+function getduration($duration_days){
+    switch($duration_days){
+        case "7 Days":
+            $duration_days = 7;
+            break;
+        case "10 Days":
+            $duration_days = 10;
+            break;
+        case "2 Weeks":
+            $duration_days = 14;
+            break;
+        case "3 Weeks":
+            $duration_days = 21;
+            break;
+    }
+    return $duration_days;
+}
+
+function getEndDate($start, $durations){
+    echo nl2br("\n\n");
+    // echo $duration;
+    echo nl2br("\n\n");
+    $duration_days = getduration($durations);
+    $year = substr($start, 0,4);
+    $days = substr($start, -2);
+    $month =  substr($start, -5,-3);
+    // calculate enddate
+    if($days + $duration_days > 28){
+        if($month == 2){
+            $month++;
+            $days = $days + $duration_days - 28;
+            
+        }else if($days + $duration_days > 30){
+            if($month == 4 || $month == 6 || $month == 9 || $month == 11){
+                $month++;
+                $days = $days + $duration_days - 30;
+            }else{
+                if($days + $duration_days > 31){
+                    if($month == 12){
+                        $year++;
+                        $month = 1;
+                    }else{
+                        $month++;
+                    }
+                    $days = $days + $duration_days - 31;
+                }
+            }
+        }
+    }
+    ////////
+    $month = (strlen($month) == 1) ? "0".$month : $month;
+    $days = (strlen($days) == 1) ? "0".$days : $days;
+    $enddate = $year."-".$month."-".$days;
+    
+    return $enddate;
+}
+
 function addQuarantine()
 {
-    echo nl2br("addQuarantine()\n\n");
+    // echo nl2br("addQuarantine()\n\n");
     require_once('./dbconn.php');
-    $hostname = "localhost";
-    $database  = "waddproject";
-    $username = "root";
-    $password  = "";
-    // $dbconn = new PDO('mysql:host='.$hostname.';dbname='.$database, $username, $password);
+    
     $city = $_POST['city'];
     $country = $_POST['country'];
     $duration = $_POST['duration'];
     $startDate = $_POST['startDate'];
     $description = $_POST['description'];
     $email = $_SESSION['useremail'];
-    // $query = "INSERT INTO quarantine (first_name, last_name, email, user_password) VALUES ('$firstname','$lastname','$email','$password')";
-
+    
+    $enddates = getEndDate($startDate, $duration);
+    $duration = getduration($duration);
+    // echo $duration;
     $sql = "SELECT user_id FROM user WHERE email = '$email'";
-    echo ($sql);
-    echo nl2br("\n\n");
+    
     $result = $conn->query($sql);
-
-    var_dump($result);
+    
     $count = mysqli_num_rows($result);
     $row = mysqli_fetch_array($result);
-    // echo ($stmt->param_count);
-    // echo nl2br("\n\n");
-    // $result = $conn->query($sql);
-    echo ($row);
-    echo nl2br("\n\n");
-    if ($count == 1) {
-        echo nl2br("This is registered user\n\n");
-        $userid = $row['user_id'];
-        // $_SESSION['isLogin'] = 1;
-        print_r("userid:" . $userid);
-        echo nl2br("\n\n");
-        $sql = "INSERT INTO quarantine (first_name, last_name, email, user_password) VALUES ('$city','$country','$duration','$startDate','$userid')";
-        echo ($sql);
-        echo nl2br("\n\n");
-
-        // header("location: ../home.php");
-    } else {
-        // $error = "Your Login Name or Password is invalid";
-        // echo nl2br("Your Login Name or Password is invalid\n\n");
-        // header("location: ../signUp/loginPage.php");
-    }
-
-    // $db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-    // $sql = ("SELECT UserID FROM USERS WHERE Email = '" . $_SESSION['useremail'] . "'");
-    // $result = $db->query($sql);
-    // $row = mysqli_fetch_array($result);
-    // $userid = intval($row['UserID']);
-    // $fee = intval($fee);
-    // $_SESSION['userid'] = $userid;
-    // $sql = ("set foreign_key_checks=0");
-    // $result = $db->query($sql);
-    // $sql = ("INSERT INTO ITINERARY (UserID,DateTimeStart,DateTimeEnd,EventID,BookingFee,EventName) VALUES ($userid, '" . $_SESSION['daytime1'] . "', '" . $_SESSION['daytime2'] . "', '$eventid', $fee, '$eventname')");
-
-
-    //     $rs = mysqli_query($conn, $query)
-    //         or die(mysqli_error($conn));
-
-    //     echo ($query);
-    //     echo nl2br("\n\n");
-
-    //     // echo "1";
-    //     $result = $conn->query($query);
-    //     print_r($result);
-    //     echo nl2br("\n\n");
-    //     // echo($rs);
-    //     $count = mysqli_num_rows($result);
-    //     $row = mysqli_fetch_array($result);
-
-    //     if ($count == 1) {
-    //         echo nl2br("This is registered user\n\n");
-    //         $_SESSION['useremail'] = $row['email'];
-    //         $_SESSION['isLogin'] = 1;
-    //         // print_r($_SESSION['useremail']);
-    //         // echo nl2br("\n\n");
-
-    //         header("location: ../home.php");
-    //     } else {
-    //         $error = "Your Login Name or Password is invalid";
-    //         // echo nl2br("Your Login Name or Password is invalid\n\n");
-    //         // header("location: ../signUp/loginPage.php");
-    //     }
+   
+    
+        
+    $userid = $row['user_id'];
+        
+    $query = "INSERT INTO quarantine (user_id, country, start_date, end_date, is_done, city, description, duration) 
+    VALUES ('$userid','$country','$startDate','$enddates', '0', '$city', '$description', '$duration')";
+    $rs = mysqli_query($conn, $query)
+        or die(mysqli_error($conn));
+    header("location: ../home.php");
+    
 }
 
 

@@ -2,9 +2,9 @@
     console.log("LOGIN PAGE")
 </script>
 <?php
-session_start();
 
-var_dump($_POST, "\n\n");
+
+// var_dump($_POST, "\n\n");
 echo nl2br("\n\n");
 function Login()
 {
@@ -14,7 +14,7 @@ function Login()
     $query = "SELECT * FROM user WHERE email = '$email' AND user_password = '$password'";
     // $rs = mysqli_query($conn, $query)
     //     or die(mysqli_error($conn));
-
+    
     echo ($query);
     echo nl2br("\n\n");
 
@@ -25,13 +25,16 @@ function Login()
     // echo($rs);
     $count = mysqli_num_rows($result);
     $row = mysqli_fetch_array($result);
-
-    if ($count == 1) {
-        echo nl2br("This is registered user\n\n");
+    
+    if($count == 1) {
+        // echo nl2br("This is registered user\n\n");
+        
+        session_start();
         $_SESSION['useremail'] = $row['email'];
         $_SESSION['isLogin'] = 1;
-        print_r($_SESSION['useremail']);
-        echo nl2br("\n\n");
+        $_SESSION['firstname'] = $row['first_name'];
+        // print_r($_SESSION['useremail']);
+        // echo nl2br("\n\n");
 
         header("location: ../home.php");
     } else {
@@ -48,5 +51,5 @@ if (isset($_POST['submit'])) {
 
 ?>
 <script>
-    location.reload();
+    
 </script>

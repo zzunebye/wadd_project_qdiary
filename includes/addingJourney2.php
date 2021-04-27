@@ -25,7 +25,7 @@
 
     <form method="POST" action="./model/addQurantine.php" class="w-75 p-2 d-flex flex-column m-auto px-5 justify-content-center border border-primary rounded">
         <h2 class="text-center">
-            Add Journey
+            Start Your Journey Here!
         </h2>
         <div class="d-flex m-auto w-100 justify-content-between">
 
@@ -39,6 +39,7 @@
                     <option value="China">
                     <option value="Hong Kong">
                     <option value="U.S.">
+                    <option value="South Korea">
                 </datalist>
             </div>
             <div class="form-group  w-50">
@@ -51,14 +52,17 @@
                     <option value="Los Angeles">
                     <option value="Hong Kong">
                     <option value="Chicago">
+                    <option value="seoul">
                 </datalist>
             </div>
         </div>
 
 
         <div class="form-group mt-2">
-            <label>Duration of quarantine</label>
+            <label>Duration of Quarantine</label>
             <select class="form-control" name="duration">
+                <option>7 Days</option>
+                <option>10 Days</option>
                 <option>2 Weeks</option>
                 <option>3 Weeks</option>
             </select>

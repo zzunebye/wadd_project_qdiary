@@ -28,8 +28,8 @@
 <body>
     <?php
     session_start();
-    if (isset($_SESSION['useremail'])) {
-        $welcomeMessage = "Welcome to the member's area, " . $_SESSION['useremail'] . "!";
+    if ($_SESSION['isLogin']) {
+        $welcomeMessage = "Welcome to the member's area, " . $_SESSION['firstname'] . "!";
     } else {
         header('Location: ./signUp/loginPage.php');
     }
@@ -66,22 +66,19 @@
         </div>
 
         <div class="mb-3">
-            <div id="mainContent" class="d-flex p-2 m-auto flex-column justify-content-center w-75 px-5 border border-primary rounded">
-                <!-- 임시 컴포넌트: 나중에 수정하기 -->
+            <form id="mainContent" method="POST" action="./model/addCard.php" class="d-flex p-2 m-auto flex-column justify-content-center w-75 px-5 border border-primary rounded">
                 <div>
-                    <h2 class="text-center b5">Add a card</h2>
+                    <h2 class="text-center b5">Add Card for Today!</h2>
                 </div>
                 <div class="mb-3">
-                    <!-- <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label> -->
-                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Write your thought..." rows="3" required></textarea>
+                    <textarea class="form-control" name="thought" id="exampleFormControlTextarea1" placeholder="Write your thought..." rows="3" required></textarea>
                 </div>
-
                 <div class="d-flex mb-3 justify-content-between">
                     <label for="formFile" class="form-label  text-left">Add Image</label>
-                    <input class="form-control col-9" type="file" id="formFile">
+                    <input class="form-control col-9" name="picture" type="file" id="formFile">
                 </div>
-                <a class="btn btn-primary btn-sm " href="#" role="button">Upload</a>
-            </div>
+                <button class="btn btn-primary btn-sm" name="submit" type="submit" value="addJourney">Submit</button>
+            </form>
             
         </div>
 
