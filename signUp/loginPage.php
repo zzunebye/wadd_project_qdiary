@@ -11,12 +11,39 @@
 
 <body>
 <?php
+    function alert($msg) {
+      echo "<script type='text/javascript'>alert('$msg');</script>";
+   }
     require_once('../model/dbconn.php');
     session_start();
     $_SESSION['isLogin'] = 0;
-    if (isset($_SESSION['useremail'])) {
-      // echo $_SESSION['isLogin'];
+    
+    if(isset($_POST['email']) == true && isset($_POST['password']) == true){
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+      $query = "SELECT * FROM user WHERE email = '$email' AND user_password = '$password'";
+      
+      $result = $conn->query($query);
+     
+      $count = mysqli_num_rows($result);
+      $row = mysqli_fetch_array($result);
+      
+      if($count == 1) {
+  
+  
+          $_SESSION['useremail'] = $row['email'];
+          $_SESSION['isLogin'] = 1;
+          $_SESSION['firstname'] = $row['first_name'];
+  
+          header("location: ../home.php");
+      } else {
+          $error = "Your email or Password is invalid";
+          alert($error);
+          // header("location: loginPage.php");
+      }
     }
+    // email validation
+    
     ?>
   <div class="container">
     
@@ -25,7 +52,7 @@
     </div>
     <div class="coverPicture">
     </div>
-    <form id="form" class="form" action="../model/login.php" method="POST">
+    <form id="form" class="form" action="" method="POST">
       <h2>LogIn With Us</h2>
       <div class="form-control">
         <label for="email">Email</label>

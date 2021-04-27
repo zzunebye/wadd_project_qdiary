@@ -28,7 +28,7 @@
 <body>
     <?php
     session_start();
-    if ($_SESSION['isLogin'] && isset($_SESSION['useremail'])) {
+    if ($_SESSION['isLogin'] && isset($_SESSION['useremail']) == true) {
         $welcomeMessage = "Welcome to the member's area, " . $_SESSION['firstname'] . "!";
     } else {
         header('Location: ./signUp/loginPage.php');
@@ -37,11 +37,8 @@
     <div id="wrapper">
         <div id="nav">
             <?php
-            require("includes/header.php");
-            // require_once("includes/classes/VideoDetailsFormProvider.php");
+            require("./includes/header.php");
             ?>
-
-
         </div>
 
         <div class="mb-4 mt-4 mx-auto  w-75">
@@ -49,9 +46,6 @@
         </div>
 
         <div class="input-group p-2 mb-4 mt-4 mx-auto border border-primary border-radio rounded w-75">
-
-            <!-- <form action="/action_page.php" class="d-flex"> -->
-            <!-- <input type="text" placeholder="Search for the city..." name="search" class="form-control w-5"> -->
             <input class="form-control mr-1" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." required>
             <datalist id="datalistOptions">
                 <option value="San Francisco">
@@ -66,28 +60,31 @@
         </div>
 
         <div class="mb-3">
-            <form id="mainContent" method="POST" action="./model/addCard.php" class="d-flex p-2 m-auto flex-column justify-content-center w-75 px-5 border border-primary rounded">
-                <div>
-                    <h2 class="text-center b5">Add Card for Today!</h2>
-                </div>
-                <div class="mb-3">
-                    <textarea class="form-control" name="thought" id="exampleFormControlTextarea1" placeholder="Write your thought..." rows="3" required></textarea>
-                </div>
-                <div class="d-flex mb-3 justify-content-between">
-                    <label for="formFile" class="form-label  text-left">Add Image</label>
-                    <input class="form-control col-9" name="picture" type="file" id="formFile">
-                </div>
-                <button class="btn btn-primary btn-sm" name="submit" type="submit" value="addJourney">Submit</button>
-            </form>
-            
-        </div>
-
-        <div class="mb-3">
-
             <?php
-            require("includes/addingJourney2.php");
-            // require_once("includes/classes/VideoDetailsFormProvider.php");
+                require_once('./model/dbconn.php');
+                $email = $_SESSION['useremail'];
+                $sql = "SELECT user_id FROM user WHERE email = '$email'";
+                $rs=mysqli_query($conn,$sql)
+			        or die(mysqli_error($conn));
+                $row = mysqli_fetch_array($rs);
+                $userid = $row['user_id'];
+
+                $query = "SELECT is_done FROM quarantine WHERE user_id = '$userid'";
+                $result=mysqli_query($conn,$query)
+			        or die(mysqli_error($conn));
+                $row = mysqli_fetch_array($result);
+                $quarantine_on = $row['is_done'];
+                
+
+                if($quarantine_on == NULL){
+                    require("includes/addingJourney.php");
+                }else if ($quarantine_on == 0){
+                    require("includes/addingCard.php");
+                }else{
+                    require("includes/addingJourney.php");
+                }
             ?>
+            
         </div>
 
     </div>

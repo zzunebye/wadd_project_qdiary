@@ -5,20 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light ">
         <div class="container-fluid d-flex justify-content-between align-items-center">
-            <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button> -->
-            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button> -->
-
                 <a class="navbar-brand ">Q Journal</a>
                 <ul class="navbar-nav d-flex justify-content-center">
                     <li class="nav-item">
@@ -38,13 +31,12 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="#">Account</a></li>
-                            <form id="form" class="form" action="./model/logout.php" method="POST">
-                                <li>
+                            <li>
+                                <form id="form" class="form" action="./model/logout.php" method="POST">
+                                
                                     <button name="submit" type="submit" value="Login">Logout</button>
-                                </li>
-                            </form>
-                            
-                            <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                                </form>
+                            </li>
                         </ul>
                     </li>
                 </ul>

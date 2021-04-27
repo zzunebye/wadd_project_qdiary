@@ -12,11 +12,37 @@
 </head>
 
 <body>
+<?php
+    function alert($msg) {
+      echo "<script type='text/javascript'>alert('$msg');</script>";
+   }
+    require_once('../model/dbconn.php');
+    if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['password'])){
+        $firstname= $_POST['firstname']; 
+        $lastname = $_POST['lastname'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $sql = "SELECT * FROM user where email = '$email'";
+        $rs=mysqli_query($conn,$sql)
+		    	or die(mysqli_error($conn));
+        if(mysqli_num_rows($rs) == 1){
+            alert("Your email is already taken");
+            // header("Location:../signup/registerpage.php"); 
+        }else{
+            $query = "INSERT INTO user (first_name, last_name, email, user_password) VALUES ('$firstname','$lastname','$email','$password')";
+            $rs = mysqli_query($conn, $query)
+                or die(mysqli_error($conn));
+            session_start();
+            $_SESSION["useremail"] = $email;
+            $_SESSION["firstname"] = $firstname;
+            $_SESSION["isLogin"] = 1;
+            header("location: ../home.php");
+        }
+    }
+?>
   <div class="container">
-    <?php
-    require_once('../model/dbconn.php')
-    ?>
-    <form id="form" class="form" method="post" action="../model/register.php">
+    
+    <form id="form" class="form" method="post" action="">
       <h2>Register With Us</h2>
       <div class="form-control">
         <label for="firstname">First Name</label>
