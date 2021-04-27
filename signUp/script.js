@@ -1,5 +1,6 @@
 const form = document.getElementById('form');
-const username = document.getElementById('username');
+const firstname = document.getElementById('firstname');
+const lastname = document.getElementById('lastname');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const password2 = document.getElementById('confirm');
@@ -31,6 +32,7 @@ function checkEmail(input) {
 // Check required fields
 function checkRequired(inputArr) {
   inputArr.forEach(function(input) {
+
     if (input.value.trim() === '') {
       showError(input, `${getFieldName(input)} is required`);
     } else {
@@ -70,10 +72,11 @@ function getFieldName(input) {
 
 // Event listeners
 form.addEventListener('submit', function(e) {
-  e.preventDefault();
+  // e.preventDefault();
 
-  checkRequired([username, email, password, password2]);
-  checkLength(username, 3, 15);
+  checkRequired([firstname, lastname, email, password, password2]);
+  checkLength(firstname, 2, 15);
+  checkLength(lastname, 2, 15);
   checkLength(password, 6, 25);
   checkEmail(email);
   checkPasswordsMatch(password, password2);

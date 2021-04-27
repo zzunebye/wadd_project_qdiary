@@ -22,7 +22,7 @@
                 <a class="navbar-brand ">Q Journal</a>
                 <ul class="navbar-nav d-flex justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="./home.php">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./journal.php">My Journey</a>

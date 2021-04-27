@@ -21,28 +21,44 @@
 </head>
 
 <body>
+    <!-- <div id="mainContent" class="d-flex m-auto flex-column justify-content-center w-75 px-5 border border-primary"> -->
 
-    <form class="w-75  m-auto justify-content-center border border-primary">
+    <form method="POST" action="./model/addQurantine.php" class="w-75 p-2 d-flex flex-column m-auto px-5 justify-content-center border border-primary rounded">
         <h2 class="text-center">
-            Display Form Controls
+            Add Journey
         </h2>
-        <div class="form-group">
-            <label>City</label>
-            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type the city that u are staying...">
-            <datalist id="datalistOptions">
-                <option value="San Francisco">
-                <option value="New York">
-                <option value="Seattle">
-                <option value="Los Angeles">
-                <option value="Hong Kong">
-                <option value="Chicago">
-            </datalist>
+        <div class="d-flex m-auto w-100 justify-content-between">
+
+            <div class="form-group w-50 mr-4">
+                <label>Country</label>
+                <input class="form-control" list="countryOptions" name="country" id="exampleDataList" placeholder="Type the country that u are staying...">
+                <datalist id="countryOptions">
+                    <option value="Germany">
+                    <option value="Indonesia">
+                    <option value="Japan">
+                    <option value="China">
+                    <option value="Hong Kong">
+                    <option value="U.S.">
+                </datalist>
+            </div>
+            <div class="form-group  w-50">
+                <label>City</label>
+                <input class="form-control" list="cityOptions" name="city" id="exampleDataList" placeholder="Type the city that u are staying...">
+                <datalist id="cityOptions">
+                    <option value="San Francisco">
+                    <option value="New York">
+                    <option value="Seattle">
+                    <option value="Los Angeles">
+                    <option value="Hong Kong">
+                    <option value="Chicago">
+                </datalist>
+            </div>
         </div>
 
 
         <div class="form-group mt-2">
             <label>Duration of quarantine</label>
-            <select class="form-control">
+            <select class="form-control" name="duration">
                 <option>2 Weeks</option>
                 <option>3 Weeks</option>
             </select>
@@ -50,13 +66,17 @@
         <div class="form-group mt-2">
             <label for="example-date-input" class="">Date</label>
             <div class="">
-                <input class="form-control" type="date" value="" id="example-date-input">
+                <input class="form-control" type="date" name="startDate" value="" id="example-date-input">
             </div>
         </div>
         <div class="form-group mt-2">
             <label>Description</label>
-            <textarea class="form-control"></textarea>
+            <textarea class="form-control" name="description"></textarea>
         </div>
+        <button class="btn btn-primary btn-sm" name="submit" type="submit" value="addJourney">Submit</button>
+        <!-- <a class="btn btn-primary btn-sm "name="submit" value="addJourney" type="submit" role="button">Upload</a> -->
+
+
     </form>
     <script defer async src="../controllers/geocode.js "></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOYJr7At-8assOQ-QddL2w5emwRH5LDFI&callback=initMap&libraries=&v=weekly">

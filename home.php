@@ -26,21 +26,33 @@
 </head>
 
 <body>
+    <?php
+    session_start();
+    if (isset($_SESSION['useremail'])) {
+        $welcomeMessage = "Welcome to the member's area, " . $_SESSION['useremail'] . "!";
+    } else {
+        header('Location: ./signUp/loginPage.php');
+    }
+    ?>
     <div id="wrapper">
         <div id="nav">
             <?php
-                require("includes/header.php");
+            require("includes/header.php");
             // require_once("includes/classes/VideoDetailsFormProvider.php");
             ?>
-            
+
 
         </div>
 
-        <div class="input-group mb-4 mt-4 mx-auto border border-primary w-75">
+        <div class="mb-4 mt-4 mx-auto  w-75">
+            <p class="text-center "><?php echo($welcomeMessage) ?></p>
+        </div>
+
+        <div class="input-group p-2 mb-4 mt-4 mx-auto border border-primary border-radio rounded w-75">
 
             <!-- <form action="/action_page.php" class="d-flex"> -->
             <!-- <input type="text" placeholder="Search for the city..." name="search" class="form-control w-5"> -->
-            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
+            <input class="form-control mr-1" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." required>
             <datalist id="datalistOptions">
                 <option value="San Francisco">
                 <option value="New York">
@@ -54,22 +66,23 @@
         </div>
 
         <div class="mb-3">
-            <div id="mainContent" class="d-flex m-auto flex-column justify-content-center w-75 px-5 border border-primary">
+            <div id="mainContent" class="d-flex p-2 m-auto flex-column justify-content-center w-75 px-5 border border-primary rounded">
                 <!-- 임시 컴포넌트: 나중에 수정하기 -->
                 <div>
                     <h2 class="text-center b5">Add a card</h2>
                 </div>
                 <div class="mb-3">
                     <!-- <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label> -->
-                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Write your thought..." rows="3"></textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Write your thought..." rows="3" required></textarea>
                 </div>
 
-                <div class="row mb-3">
-                    <label for="formFile" class="form-label col-3 text-left">Add Image</label>
+                <div class="d-flex mb-3 justify-content-between">
+                    <label for="formFile" class="form-label  text-left">Add Image</label>
                     <input class="form-control col-9" type="file" id="formFile">
                 </div>
                 <a class="btn btn-primary btn-sm " href="#" role="button">Upload</a>
             </div>
+            
         </div>
 
         <div class="mb-3">
