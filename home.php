@@ -33,6 +33,14 @@
     } else {
         header('Location: ./signUp/loginPage.php');
     }
+    // echo 'console.log('.$_SESSION['qid'].';)';
+
+    echo $_SESSION['current_q'];
+    if ($_SESSION['current_q']) {
+        $remindMessage = "You are on quarantine now";
+    } else {
+        $remindMessage = "Are you going to do quarantine soon?";
+    }
     ?>
     <div id="wrapper">
         <div id="nav">
@@ -43,6 +51,7 @@
 
         <div class="mb-4 mt-4 mx-auto  w-75">
             <p class="text-center "><?php echo($welcomeMessage) ?></p>
+            <p class="text-center "><?php echo($remindMessage) ?></p>
         </div>
 
         <div class="input-group p-2 mb-4 mt-4 mx-auto border border-primary border-radio rounded w-75">

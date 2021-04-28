@@ -10,43 +10,70 @@
 </head>
 
 <body>
-<?php
-    function alert($msg) {
-      echo "<script type='text/javascript'>alert('$msg');</script>";
-   }
-    require_once('../model/dbconn.php');
-    session_start();
-    $_SESSION['isLogin'] = 0;
-    
-    if(isset($_POST['email']) == true && isset($_POST['password']) == true){
-      $email = $_POST['email'];
-      $password = $_POST['password'];
-      $query = "SELECT * FROM user WHERE email = '$email' AND user_password = '$password'";
-      
-      $result = $conn->query($query);
-     
-      $count = mysqli_num_rows($result);
+  <?php
+  function alert($msg)
+  {
+    echo "<script type='text/javascript'>alert('$msg');</script>";
+  }
+  require_once('../model/dbconn.php');
+  session_start();
+  $_SESSION['isLogin'] = 0;
+
+  if (isset($_POST['email']) == true && isset($_POST['password']) == true) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $query = "SELECT * FROM user WHERE email = '$email' AND user_password = '$password'";
+
+    $result = $conn->query($query);
+
+    $count = mysqli_num_rows($result);
+    $row = mysqli_fetch_array($result);
+
+    if ($count == 1) {
+
+
+      $_SESSION['useremail'] = $row['email'];
+      $_SESSION['uid'] = $row['user_id'];
+      $_SESSION['isLogin'] = 1;
+      $_SESSION['firstname'] = $row['first_name'];
+
+      $userid = $_SESSION['uid'];
+      $query = "SELECT is_done FROM quarantine WHERE user_id = '$userid'";
+      $result = mysqli_query($conn, $query)
+        or die(mysqli_error($conn));
       $row = mysqli_fetch_array($result);
-      
-      if($count == 1) {
-  
-  
-          $_SESSION['useremail'] = $row['email'];
-          $_SESSION['isLogin'] = 1;
-          $_SESSION['firstname'] = $row['first_name'];
-  
-          header("location: ../home.php");
+      $quarantine_on = $row['is_done'];
+
+      echo $quarantine_on;  
+
+      if ($quarantine_on != 1) {
+        $query = "SELECT * FROM quarantine WHERE user_id = '$userid' AND is_done = 0";
+        $result = mysqli_query($conn, $query)
+          or die(mysqli_error($conn));
+        $row = mysqli_fetch_array($result);
+        $start = $row['start_date'];
+        $duration = $row['duration'];
+        $qid = $row['quarantine_id'];
+        $_SESSION['current_q'] = $row['quarantine_id'];
       } else {
-          $error = "Your email or Password is invalid";
-          alert($error);
-          // header("location: loginPage.php");
+        $_SESSION['current_q'] = 0;
       }
+
+
+      header("location: ../home.php");
+    } else {
+      $error = "Your email or Password is invalid";
+      alert($error);
+      // header("location: loginPage.php");
     }
-    // email validation
-    
-    ?>
+  }
+  // email validation
+
+
+
+  ?>
   <div class="container">
-    
+
     <div class="title">
       <h1>Q - Journal</h1>
     </div>

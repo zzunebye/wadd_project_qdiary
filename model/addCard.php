@@ -2,6 +2,7 @@
     session_start();
     require_once('./dbconn.php');
     $content = $_POST['thought'];
+    $title = $_POST['title'];
     date_default_timezone_set("Asia/Hong_Kong");
     $date = date('Y-m-d h:i:s');
     
@@ -22,9 +23,9 @@
     $quarantine_id = $row['quarantine_id'];
     // echo $quarantine_id; 
 
-    $query = "INSERT INTO card (card_content, quarantine_id, created_time) 
-    VALUES ('$content','$quarantine_id','$date')";
+    $query = "INSERT INTO card (card_content, quarantine_id, created_time, card_title) 
+    VALUES ('$content','$quarantine_id','$date', '$title')";
     $rs = mysqli_query($conn, $query)
         or die(mysqli_error($conn));
-    header("location: ../home.php");
+    header("location: ../journal.php");
 ?>

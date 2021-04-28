@@ -21,7 +21,10 @@
                     <h2 class="text-center b5">Add Card for Today!</h2>
                 </div>
                 <div class="mb-3">
-                    <textarea class="form-control" name="thought" id="exampleFormControlTextarea1" placeholder="Write your thought..." rows="3" required></textarea>
+                    <input class="form-control" name="title" id="exampleFormControlTextarea1" placeholder="Write the title..." rows="1" required></input>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" name="thought" id="exampleFormControlTextarea1" placeholder="Write your thought..." rows="4" required></textarea>
                 </div>
                 <div class="d-flex mb-3 justify-content-between">
                     <label for="formFile" class="form-label  text-left">Add Image</label>
