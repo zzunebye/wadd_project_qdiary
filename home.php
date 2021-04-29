@@ -15,10 +15,20 @@
             width: 100%;
             visibility: hidden;
         } */
+
+        .card.cardQuar {
+            cursor: pointer;
+        }
+
+        .card.cardQuar:hover {
+            transform: scale(1.05)
+        }
+
+
         #dataViewer {
             font-family: "Raleway", sans-serif;
             max-height: 300px;
-            background: #373737;
+            background: #283b42;
             overflow-y: scroll;
             color: #fff;
             padding: 32px;
@@ -33,12 +43,10 @@
 
         #dataViewer::-webkit-scrollbar {
             width: 3px;
-            /* padding: 32px; */
             background: #101010;
         }
 
         #dataViewer::-webkit-scrollbar-thumb {
-            /* padding: 32px; */
             background: #ffffff;
         }
     </style>
@@ -54,12 +62,6 @@
     <?php
     session_start();
     require_once('./model/dbconn.php');
-    $query = "SELECT first_name, last_name FROM user";
-    $result = $conn->query($query);
-    $count = mysqli_num_rows($result);
-    $fetchedNames = $result->fetch_all(MYSQLI_ASSOC);
-    var_dump($row);
-
 
     if ($_SESSION['isLogin'] && isset($_SESSION['useremail']) == true) {
         $welcomeMessage = "Welcome to the member's area, " . $_SESSION['firstname'] . "!";
@@ -89,28 +91,40 @@
             <div class="searchInputs input-group">
                 <select class="col-2 form-control mr-2 container-sm" id="searchOptions" name="searchOptions">
                     <option>Name</option>
-                    <option>Country</option>
-                    <option>City</option>
+                    <option>Location</option>
                 </select>
-                <input class="form-control mr-1 col-10" type='text' name="searchBox" id="searchBox" placeholder="Type to search..." oninput=search(this.value) onfocusout=closeSearchResults()> <required>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                <input class="form-control mr-1 col-10" type='text' name="searchBox" id="searchBox" placeholder="Type to search..." oninput=search(this.value) onfocus=closeSearchResults() autocomplete="off">
+                <required>
+                    <!-- <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button> -->
 
             </div>
             <div class="searchResults">
 
                 <ul id='dataViewer' class='list-unstyled my-0 py-0 overflow-scroll border'>
-                    <?php foreach ($fetchedNames as $i) { ?>
-                    <?php } ?>
+
                 </ul>
-                <!-- </form> -->
+
             </div>
         </form>
 
+        <div class="mt-2 mb-4 d-flex p-2 mx-auto flex-column justify-content-center w-75 px-5 border border-primary round">
+            <div>
+                <h2 class=" text-center b5">Search Result</h2>
+            </div>
+            <div class="mb-3" id="searchResults">
+
+            </div>
+            <div id="timelineContainer" class="d-flex flex-column p-1 mb-2 mt-1 mx-auto rounded w-100 ">
+
+                <div class="uk-container uk-padding">
+                    <div class="uk-timeline  border-start border-3 border-primary ps-3 " id="uk-timeline">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="mb-3">
             <?php
-            // $db = new DB();
-            // $data = $db->searchByName();
-            // echo $data;
             $email = $_SESSION['useremail'];
             $sql = "SELECT user_id FROM user WHERE email = '$email'";
             $rs = mysqli_query($conn, $sql)
@@ -143,42 +157,198 @@
 
     <script>
         function search(name) {
-            const optionValue = document.getElementById('searchOptions').value 
-            console.log(name);
-            console.log(optionValue);
+            const optionValue = document.getElementById('searchOptions').value
             fetchSearchData(name, optionValue);
         }
 
         function fetchSearchData(name, optionValue) {
+
+            const body = new URLSearchParams();
             fetch('./model/search.php', {
                     method: 'POST',
-                    body: new URLSearchParams('name=' + name,'option='+optionValue)
+                    body: new URLSearchParams('name=' + name + '&option=' + optionValue)
                 })
                 .then(res => res.json())
                 .then(res => {
                     console.log(res);
-                    viewSearcResult(res);
+                    viewSearchResult(res, optionValue);
                 })
                 .catch(e => console.error('Error: ' + e))
         }
 
-        function viewSearcResult(data) {
+        function viewSearchResult(data, optionValue) {
             const dataViewer = document.getElementById('dataViewer')
             dataViewer.innerHTML = ""
+            console.log(data);
+            console.log(data.length);
 
-            for (let i = 0; i < data.length; i++) {
-                let li = document.createElement("li");
+            if (optionValue == 'Name') {
+                for (let i = 0; i < data.length; i++) {
+                    const searchBox = document.getElementById('searchBox')
+                    let li = document.createElement("li");
 
-                li.innerHTML = data[i]['full_name'];
-                dataViewer.appendChild(li);
+                    li.classList.add("searchItem");
+                    li.style.cursor = "pointer"
+
+                    console.log("full:", data[i]['full_name']);
+                    li.innerHTML = data[i]['full_name'];
+                    li.value = data[i]['user_id'];
+
+                    li.addEventListener('click', function() {
+                        const searchBox = document.getElementById('searchBox')
+                        const dataViewer = document.getElementById('dataViewer')
+                        dataViewer.innerHTML = ""
+                        console.log("clicked:", this.innerText);
+                        searchBox.value = this.innerText;
+                        fetchItemInfo(this.innerText, this.value, optionValue)
+                    }, false);
+
+                    li.addEventListener("mouseover", function(event) {
+                        event.target.style.color = "orange";
+                    }, false);
+
+                    li.addEventListener("mouseout", function(event) {
+                        event.target.style.color = "";
+
+                    }, false);
+
+                    dataViewer.appendChild(li);
+                }
+
+            } else if (optionValue == 'Location') {
+                for (let i = 0; i < data.length; i++) {
+                    const searchBox = document.getElementById('searchBox')
+                    let li = document.createElement("li");
+
+                    li.classList.add("searchItem");
+                    li.style.cursor = "pointer"
+
+                    console.log("city:", data[i]['locale']);
+                    li.innerHTML = data[i]['locale'];
+                    li.value = data[i]['locale'];
+
+                    li.addEventListener('click', function() {
+                        const searchBox = document.getElementById('searchBox')
+                        const dataViewer = document.getElementById('dataViewer')
+                        dataViewer.innerHTML = ""
+                        console.log("clicked:", this.innerText);
+                        searchBox.value = this.innerText;
+                        fetchItemInfo(this.innerText, this.value, optionValue)
+                    }, false);
+
+
+                    li.addEventListener("mouseover", function(event) {
+                        event.target.style.color = "orange";
+                    }, false);
+
+                    li.addEventListener("mouseout", function(event) {
+                        event.target.style.color = "";
+
+                    }, false);
+
+                    dataViewer.appendChild(li);
+                }
+            }
+        }
+
+        function fetchItemInfo(value, id, option) {
+            console.log(option, ">", value, ">", id);
+            if (option == name) {
+                const result = value
+            }
+
+            const body = new URLSearchParams();
+            if (option == "Name") {
+                fetch('./model/getUserQurantinePeeks.php', {
+                        method: 'POST',
+                        body: new URLSearchParams('name=' + value + '&id=' + id + '&option=' + option)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log("data:", data);
+                        let card = ''
+
+                        const cards = data.map((element) => {
+                            const created = element['created_time']
+                            const card_title = element['card_title']
+                            const card_content = element['card_content']
+                            const newCard =
+                                `
+                                <div class="card mb-4 shadow">
+                                    <div class="card-header" style="background-color:#d1dddb">
+                                        ${created}
+                                    </div>
+                                    <div class="card-body ">
+                                        <h5 class="card-title">${card_title}</h5>
+                                        <p class="card-text">${card_content}</p>
+                                    </div>
+                                </div>
+                            `
+                            card = card + newCard
+                            // return text;
+                        });
+                        document.getElementById("uk-timeline").innerHTML = card;
+                    })
+                    .catch(e => console.error('Error: ' + e))
+            } else if (option == "Location") {
+                fetch('./model/getUserQurantinePeeks.php', {
+                        method: 'POST',
+                        body: new URLSearchParams('name=' + value + '&id=' + id + '&option=' + option)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log("data:", data);
+                        let card = ''
+
+                        const cards = data.map((element) => {
+                            const locale = element['locale'];
+                            const end_date = element['end_date'];
+                            const start_date = element['start_date'];
+                            const description = element['description'];
+                            const user_id = element['userid'];
+                            const full_name = element['full_name']
+                            const quarantine_id = element['quarantine_id']
+                            const newCard =
+                                `
+                                <div class="card cardQuar mb-4 shadow round" data-qid="${quarantine_id}">
+                                    <div class="card-header "style="background-color:#d1dddb">
+                                        ${locale}
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">${start_date} ➡ ${end_date}, <i>by ${full_name}</i></h5>
+                                        <p class="card-text">${description}</p>
+                                    </div>
+                                </div>
+                            `
+                            card = card + newCard
+
+                            // return text;
+                        });
+                        document.getElementById("uk-timeline").innerHTML = card;
+                        // document.querySelectorAll(".card.cardQuar");
+
+                    }).then(() => {
+                        console.log(Array.from(document.querySelectorAll('.cardQuar')));
+                        Array.from(document.querySelectorAll('.cardQuar')).map((e) => {
+                            e.onclick = function() {
+                                const qid = e.getAttribute("data-qid");
+                                // console.log(e.getAttribute("data-qid"));
+                            };
+                            // e.addEventListener("click", function(e) {
+                            // }, false);
+                        });
+
+                    })
+                    .catch(e => console.error('Error: ' + e))
             }
         }
 
         function closeSearchResults() {
             const dataViewer = document.getElementById('dataViewer')
+            const searchBox = document.getElementById('searchBox')
+            searchBox.value = "";
             dataViewer.innerHTML = ""
         }
-
     </script>
 
 </body>
