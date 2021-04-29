@@ -47,7 +47,7 @@
     <!-- <script defer async src="map.js"></script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>Q-diary</title>
 </head>
 
 <body>
@@ -58,7 +58,7 @@
     $result = $conn->query($query);
     $count = mysqli_num_rows($result);
     $fetchedNames = $result->fetch_all(MYSQLI_ASSOC);
-    var_dump($row);
+    // var_dump($row);
 
 
     if ($_SESSION['isLogin'] && isset($_SESSION['useremail']) == true) {
@@ -73,7 +73,7 @@
         $remindMessage = "Are you going to do quarantine soon?";
     }
     ?>
-    <div id="wrapper">
+    
         <div id="nav">
             <?php
             require("./includes/header.php");
@@ -111,6 +111,7 @@
             // $db = new DB();
             // $data = $db->searchByName();
             // echo $data;
+            // echo $_SESSION['current_q'];
             $email = $_SESSION['useremail'];
             $sql = "SELECT user_id FROM user WHERE email = '$email'";
             $rs = mysqli_query($conn, $sql)
@@ -124,10 +125,10 @@
             $row = mysqli_fetch_array($result);
             $quarantine_on = $row['is_done'];
 
-
-            if ($quarantine_on == NULL) {
+            // echo $_SESSION['current_q']; 
+            if ($_SESSION['current_q']==0) {
                 require("includes/addingJourney.php");
-            } else if ($quarantine_on == 0) {
+            } else if ($_SESSION['current_q'] > 0) {
                 require("includes/addingCard.php");
             } else {
                 require("includes/addingJourney.php");
@@ -136,7 +137,7 @@
 
         </div>
 
-    </div>
+    
     <!-- <script defer async src="./controllers/geocode.js"></script> -->
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOYJr7At-8assOQ-QddL2w5emwRH5LDFI&callback=initMap&libraries=&v=weekly"> -->
     <!-- </script> -->

@@ -16,7 +16,7 @@
 </head>
 <body>
         <div class="mb-3">
-            <form id="mainContent" method="POST" action="./model/addCard.php" class="d-flex p-2 m-auto flex-column justify-content-center w-75 px-5 border border-primary rounded">
+            <form id="mainContent" method="POST" action="./model/addCard.php" enctype="multipart/form-data" class="d-flex p-2 m-auto flex-column justify-content-center w-75 px-5 border border-primary rounded">
                 <div>
                     <h2 class="text-center b5">Add Card for Today!</h2>
                 </div>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="d-flex mb-3 justify-content-between">
                     <label for="formFile" class="form-label  text-left">Add Image</label>
-                    <input class="form-control col-9" name="picture" type="file" id="formFile">
+                    <input class="form-control col-9" name="image" type="file" id="formFile">
                 </div>
                 <button class="btn btn-primary btn-sm" name="submit" type="submit" value="addJourney">Submit</button>
             </form>

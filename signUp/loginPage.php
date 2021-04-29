@@ -38,15 +38,14 @@
       $_SESSION['firstname'] = $row['first_name'];
 
       $userid = $_SESSION['uid'];
-      $query = "SELECT is_done FROM quarantine WHERE user_id = '$userid'";
+      $query = "SELECT is_done FROM quarantine WHERE user_id = '$userid' AND is_done=0";
       $result = mysqli_query($conn, $query)
         or die(mysqli_error($conn));
       $row = mysqli_fetch_array($result);
       $quarantine_on = $row['is_done'];
+      
 
-      echo $quarantine_on;  
-
-      if ($quarantine_on != 1) {
+      if ($quarantine_on != 1 && $quarantine_on != NULL) {
         $query = "SELECT * FROM quarantine WHERE user_id = '$userid' AND is_done = 0";
         $result = mysqli_query($conn, $query)
           or die(mysqli_error($conn));

@@ -1,6 +1,10 @@
 body {
   height: 100vh;
-  box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+body::-webkit-scrollbar {
+  display: none;
 }
 
 .progressContainer {
@@ -26,6 +30,15 @@ body {
   height: 40px;
   background-color: #283b42;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+.percentage {
+  z-index: 2;
+  font-size: 20px;
 }
 .inner-bar {
   position: absolute;
@@ -50,6 +63,96 @@ span#left {
   font-size: 30px;
 }
 
+.cardContainer {
+  display: flex;
+  align-items: center;
+  /* width: 300px; */
+}
+.day {
+  /* flex-grow: 3; */
+  width: 180px;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+.card {
+  flex-grow: 15;
+}
+.termContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rope {
+  width: 55%;
+  height: 5px;
+  margin: 0 20px;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  animation: gradient 1s ease infinite;
+}
+.start {
+  color: #1d6a96;
+}
+.end {
+  color: #e81e25;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.day {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.created {
+  font-size: 12px;
+}
+
+.picture {
+  width: 200px;
+  height: 200px;
+  border-radius: 20%;
+  background: center;
+  background-position: center;
+  background-size: cover;
+  margin: auto 20px;
+  margin-bottom: 30px;
+  filter: drop-shadow(3px 5px 5px #000);
+  transition: transform 0.5s;
+}
+.picture:hover {
+  transform: scale(1.6) translate(-15%, -15%);
+}
+.card-body {
+  display: flex;
+  justify-content: flex-start;
+}
+.card-text {
+  width: 100%;
+  height: 100px;
+  padding: 0 10px;
+  /* padding: 10px; */
+  /* border: 1px solid yellow;? */
+
+  border-radius: 10px;
+}
+.card-title {
+  padding: 0 0 10px 10px;
+  font-style: italic;
+  font-weight: bold;
+  color: #283b42;
+  width: 30%;
+  border-bottom: 2px solid grey;
+  /* text-align: center;? */
+}
 /* -------------------------------- timeline -------------------------------- */
 /* 
 .timelineContainer .uk-timeline .uk-timeline-item .uk-card {

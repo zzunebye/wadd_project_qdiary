@@ -87,6 +87,14 @@ function addQuarantine()
     VALUES ('$userid','$country','$startDate','$enddates', '0', '$city', '$description', '$duration')";
     $rs = mysqli_query($conn, $query)
         or die(mysqli_error($conn));
+    $query = "SELECT * FROM quarantine WHERE user_id = '$userid' AND is_done = 0";
+    $result = mysqli_query($conn, $query)
+        or die(mysqli_error($conn));
+    $row = mysqli_fetch_array($result);
+    $start = $row['start_date'];
+    $duration = $row['duration'];
+    $qid = $row['quarantine_id'];
+    $_SESSION['current_q'] = $row['quarantine_id'];
     header("location: ../home.php");
     
 }
