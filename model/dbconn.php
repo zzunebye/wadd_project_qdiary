@@ -1,4 +1,5 @@
 <?php
+
 $hostname = "localhost";
 $database  = "waddproject";
 $username = "root";

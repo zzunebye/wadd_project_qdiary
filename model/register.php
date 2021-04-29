@@ -17,13 +17,16 @@
             header("Location:../signup/registerpage.php");
         }else{
             $query = "INSERT INTO user (first_name, last_name, email, user_password) VALUES ('$firstname','$lastname','$email','$password')";
+            
             echo "1";
             $rs = mysqli_query($conn, $query)
-                or die(mysqli_error($conn));
+            or die(mysqli_error($conn));
             session_start();
             $_SESSION["useremail"] = $email;
             $_SESSION["firstname"] = $firstname;
             $_SESSION["isLogin"] = 1;
+            
+
             header("Location:../home.php");
         }
     }else{

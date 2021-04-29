@@ -1,5 +1,5 @@
 <div class="uk-container uk-padding">
-    <div class="uk-timeline">
+    <div id="uk-timeline">
         <div class="uk-timeline-item">
             <div class="uk-timeline-icon">
                 <span class="uk-badge"><span uk-icon="check"></span></span>
