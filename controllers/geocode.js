@@ -2,18 +2,20 @@
 //  geocode();
 
 // Get Location form
+
 const locationForm = document.getElementById('location-form');
 
 // Listen for Submit
-locationForm.addEventListener('submit', geocode);
 
 let map = '';
 
-function geocode(e) {
+function geocodeDefault(location) {
   // Prevent actual submit
-  e.preventDefault();
 
-  var location = document.getElementById('location-input').value;
+  // const location = 'busan'
+  // const location = "<?php echo $_SESSION['cur_locale'];?>";
+
+  console.log("adsf:  ", location);
   axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
       params: {
         address: location,
@@ -35,36 +37,36 @@ function geocode(e) {
     `;
 
       // Address Components
-      let addressComponents = response.data.results[0].address_components;
+      // let addressComponents = response.data.results[0].address_components;
 
       // Output to app
-      let addressComponentsOutput = '<ul class="list-group">';
-      for (let i = 0; i < addressComponents.length; i++) {
-        addressComponentsOutput += `
-        <li class="list-group-item"><strong>${addressComponents[i].types[0]}</strong>:
-          ${addressComponents[i].long_name}
-        </li>
-      `;
-      }
-      addressComponentsOutput += '</ul>';
+      // let addressComponentsOutput = '<ul class="list-group">';
+      // for (let i = 0; i < addressComponents.length; i++) {
+      //   addressComponentsOutput += `
+      //   <li class="list-group-item"><strong>${addressComponents[i].types[0]}</strong>:
+      //     ${addressComponents[i].long_name}
+      //   </li>
+      // `;
+      // }
+      // addressComponentsOutput += '</ul>';
 
       // Geometry
-    //   let lat = response.data.results[0].geometry.location.lat;
-    //   let lng = response.data.results[0].geometry.location.lng;
-    //   let geometryOutput = `
-    //     <ul class="list-group">
-    //       <li class="list-group-item"><strong>Latitude</strong>:${lat}</li>
-    //       <li class="list-group-item"><strong>Longtitude</strong>:${lng}</li>
-    //     </ul>
-    // `;
+      let lat = response.data.results[0].geometry.location.lat;
+      let lng = response.data.results[0].geometry.location.lng;
+      let geometryOutput = `
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Latitude</strong>:${lat}</li>
+          <li class="list-group-item"><strong>Longtitude</strong>:${lng}</li>
+        </ul>
+    `;
 
       // innerHTML Output
       document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
-      document.getElementById('address-components').innerHTML = addressComponentsOutput;
+      // document.getElementById('address-components').innerHTML = addressComponentsOutput;
       document.getElementById('geometry').innerHTML = geometryOutput;
 
       // Init Map
-      document.getElementById('map').style.display = "hidden";
+      document.getElementById('map').style.visibility = "visible";
       console.log(lat, lng);
       initMap(location, lat, lng)
     })
@@ -75,6 +77,7 @@ function geocode(e) {
 
 function initMap(location, lat_data, lng_data) {
   console.log(lat_data, lng_data);
+  console.log(location);
 
   // Map options
   var options = {
@@ -87,12 +90,14 @@ function initMap(location, lat_data, lng_data) {
 
   // New map
   map = new google.maps.Map(document.getElementById('map'), options);
+  // const location = 'busan'
 
   const marker = {
     coords: {
       lat: lat_data,
       lng: lng_data
     },
+    // const location = "<?php echo $_SESSION['cur_locale'];?>";
     content: '<h1>Lynn MA</h1>'
   }
   console.log(marker);
@@ -104,7 +109,6 @@ function addMarker(props) {
   var marker = new google.maps.Marker({
     position: props.coords,
     map: map,
-    // icon: props.iconImage // undefined value...
   });
 
   // Check for customicon
@@ -125,6 +129,9 @@ function addMarker(props) {
   }
 }
 
-function openMap(location, lat, lng) {
 
-}
+$(document).ready(function () {
+  const mapInput = document.getElementById('mapInput');
+  console.log(mapInput);
+  geocodeDefault(mapInput.value)
+});

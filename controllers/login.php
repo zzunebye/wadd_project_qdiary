@@ -21,21 +21,15 @@
 		});
 	});
 	</script>
-	<!------ Include the above in your HEAD tag ---------->
+
 </head>
 <body>
 <?php
-	//$servicePublicKey = openssl_pkey_get_public(file_get_contents($_SERVER['DOCUMENT_ROOT']."/ServerPublicKey .pem"));
+
 	
 ?>
 
-<!--<div class="container">
-	<div class="row">
-		<div class="col-md-6 col-md-offset-3" style="text-align: center;">
-			<h1>Customer</h1>
-		</div>
-	</div>
-</div>-->
+
 <br/><br/><br/>
 <div class="container">
 		<div class="row">

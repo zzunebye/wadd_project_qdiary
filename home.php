@@ -7,23 +7,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="./style/journal.css" />
+    <link rel="stylesheet" href="./style/home.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
-        /* #map {
-            height: 400px;
-            width: 100%;
-            visibility: hidden;
-        } */
-
+        body {
+            height: 100vh;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+            font-family: "Karla", sans-serif;
+        }
+        h2{
+            font-family: 'Karla', sans-serif;
+        }
         .card.cardQuar {
             cursor: pointer;
         }
 
         .card.cardQuar:hover {
+
             transform: scale(1.05)
         }
-
+        .cardContainer {
+            display: flex;
+            align-items: center;
+            /* width: 300px; */
+        }
 
         #dataViewer {
             font-family: "Raleway", sans-serif;
@@ -48,6 +62,30 @@
 
         #dataViewer::-webkit-scrollbar-thumb {
             background: #ffffff;
+        }
+        .welcome{
+            border-bottom: 3px solid #b6cad8;
+        }
+        .welcome :first-child{
+            font-size: 30px;
+        }
+        .afterSearch{
+            display: none;
+        }
+        .afterSearch.show{
+            display: block;
+        }
+        .adding.hidden{
+            display: none;
+        }
+        button{
+            transition: 0.5s;
+            width: 120px;
+            height: 40px;
+        }
+        button:hover{
+            color: #fff;
+            transform: scale(1.01);
         }
     </style>
 
@@ -88,12 +126,12 @@
             ?>
         </div>
 
-        <div class="mb-4 mt-4 mx-auto  w-75 border border-primary">
+        <div class="mb-4 mt-4 mx-auto  w-75 welcome">
             <p class="text-center "><?php echo ($welcomeMessage) ?></p>
             <p class="text-center "><?php echo ($remindMessage) ?></p>
         </div>
 
-        <form action="model/search.php" class="d-flex flex-column p-2 mb-4 mt-4 mx-auto border border-primary border-radio rounded w-75">
+        <form action="model/search.php" class="d-flex flex-column p-2 mb-4 mt-4 mx-auto  rounded w-75">
             <div class="searchInputs input-group">
                 <select class="col-2 form-control mr-2 container-sm" id="searchOptions" name="searchOptions">
                     <option>Name</option>
@@ -106,30 +144,33 @@
             </div>
             <div class="searchResults">
 
-                <ul id='dataViewer' class='list-unstyled my-0 py-0 overflow-scroll border'>
+                <ul id='dataViewer' class='list-unstyled my-0 py-0 overflow-scroll '>
 
                 </ul>
 
             </div>
         </form>
 
-        <div class="mt-2 mb-4 d-flex p-2 mx-auto flex-column justify-content-center w-75 px-5 border border-primary round">
-            <div>
+        <div class="mt-2 mb-4 d-flex p-2 mx-auto flex-column justify-content-center w-75 px-5">
+            <div class="afterSearch" id="searchBoxs" style="position: relative;">
                 <h2 class=" text-center b5">Search Result</h2>
+                <button id="button" style="border: 0; outline:0; background-color:#85b8cb; border-radius: 10px;
+                position: absolute;
+                top: 0; right:0;">Hide Results</button>
             </div>
             <div class="mb-3" id="searchResults">
 
             </div>
             <div id="timelineContainer" class="d-flex flex-column p-1 mb-2 mt-1 mx-auto rounded w-100 ">
 
-                <div class="uk-container uk-padding">
-                    <div class="uk-timeline  border-start border-3 border-primary ps-3 " id="uk-timeline">
+                <div class="uk-container uk-padding afterSearch" id="searchBoxss">
+                    <div class="uk-timeline  ps-3 " id="uk-timeline">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 adding" id="adding">
             <?php
          
             $email = $_SESSION['useremail'];
@@ -157,12 +198,16 @@
 
         </div>
 
-    
-    <!-- <script defer async src="./controllers/geocode.js"></script> -->
-    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOYJr7At-8assOQ-QddL2w5emwRH5LDFI&callback=initMap&libraries=&v=weekly"> -->
-    <!-- </script> -->
+
 
     <script>
+        document.getElementById('button').addEventListener('click', () => {
+            document.getElementById('searchBoxss').classList.remove("show");
+            document.getElementById('searchBoxs').classList.remove("show");
+            document.getElementById('adding').classList.remove("hidden");
+            
+        });
+        // document.getElementById('searchBox').addEventListener()
         function search(name) {
             const optionValue = document.getElementById('searchOptions').value
             fetchSearchData(name, optionValue);
@@ -186,8 +231,7 @@
         function viewSearchResult(data, optionValue) {
             const dataViewer = document.getElementById('dataViewer')
             dataViewer.innerHTML = ""
-            console.log(data);
-            console.log(data.length);
+            
 
             if (optionValue == 'Name') {
                 for (let i = 0; i < data.length; i++) {
@@ -204,8 +248,10 @@
                     li.addEventListener('click', function() {
                         const searchBox = document.getElementById('searchBox')
                         const dataViewer = document.getElementById('dataViewer')
+                        document.getElementById('searchBoxs').classList.add("show");
+                        document.getElementById('searchBoxss').classList.add("show");
+                        document.getElementById('adding').classList.add("hidden");
                         dataViewer.innerHTML = ""
-                        console.log("clicked:", this.innerText);
                         searchBox.value = this.innerText;
                         fetchItemInfo(this.innerText, this.value, optionValue)
                     }, false);
@@ -237,6 +283,9 @@
                     li.addEventListener('click', function() {
                         const searchBox = document.getElementById('searchBox')
                         const dataViewer = document.getElementById('dataViewer')
+                        document.getElementById('searchBoxs').classList.add("show");
+                        document.getElementById('searchBoxss').classList.add("show");
+                        document.getElementById('adding').classList.add("hidden");
                         dataViewer.innerHTML = ""
                         console.log("clicked:", this.innerText);
                         searchBox.value = this.innerText;
@@ -259,7 +308,7 @@
         }
 
         function fetchItemInfo(value, id, option) {
-            console.log(option, ">", value, ">", id);
+            // console.log(option, ">", value, ">", id);
             if (option == name) {
                 const result = value
             }
@@ -272,24 +321,37 @@
                     })
                     .then(res => res.json())
                     .then(data => {
-                        console.log("data:", data);
+                        // console.log("data:", data);
                         let card = ''
 
                         const cards = data.map((element) => {
                             const created = element['created_time']
                             const card_title = element['card_title']
                             const card_content = element['card_content']
+                            const picture = element['card_pic'];
+                            const check = (picture == null || picture == "") ? "none" : "inline-block";
                             const newCard =
                                 `
-                                <div class="card mb-4 shadow">
-                                    <div class="card-header" style="background-color:#d1dddb">
-                                        ${created}
+                                <div class="cardContainer">
+                            
+                            
+                                <div class="card mb-4 shadow ">
+                                    <div class="card-header ">
+                                        ${created.slice(-9)}
                                     </div>
-                                    <div class="card-body ">
+                                    <div class="card-body">
+                                        <div style="width: 100%; height: 100%;">
                                         <h5 class="card-title">${card_title}</h5>
                                         <p class="card-text">${card_content}</p>
+                                        </div>
+                                    
                                     </div>
                                 </div>
+                                <div class="picture" id="picture" 
+                                        style="background-image: url('images/${picture}'); display: ${check}">
+                                        
+                                    </div>
+                        </div>
                             `
                             card = card + newCard
                             // return text;
@@ -355,6 +417,7 @@
             const searchBox = document.getElementById('searchBox')
             searchBox.value = "";
             dataViewer.innerHTML = ""
+            
         }
     </script>
 

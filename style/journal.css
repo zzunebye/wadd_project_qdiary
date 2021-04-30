@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Karla&display=swap");
 body {
   height: 100vh;
   -ms-overflow-style: none;
@@ -5,8 +6,15 @@ body {
 }
 body::-webkit-scrollbar {
   display: none;
+  font-family: "Karla", sans-serif;
 }
-
+h2,
+h5,
+card-body,
+card-text,
+card-header {
+  font-family: "Karla", sans-serif;
+}
 .progressContainer {
   width: 100%;
   padding: 10px;
@@ -45,7 +53,7 @@ body::-webkit-scrollbar {
   top: 0;
   left: 0;
   border-radius: 20px;
-  width: 60%;
+  width: 0%;
   height: 40px;
   background-color: #1d6a96;
   text-align: center;
@@ -153,36 +161,3 @@ span#left {
   border-bottom: 2px solid grey;
   /* text-align: center;? */
 }
-/* -------------------------------- timeline -------------------------------- */
-/* 
-.timelineContainer .uk-timeline .uk-timeline-item .uk-card {
-	max-height: 300px;
-}
-
-.timelineContainer .uk-timeline .uk-timeline-item {
-    display: flex;
-    position: relative;
-}
-
-.uk-timeline .uk-timeline-item::before {
-    background: #dadee4;
-    content: "";
-    height: 100%;
-    left: 19px;
-    position: absolute;
-    top: 20px;
-    width: 2px;
-		z-index: -1;
-}
-
-.uk-timeline .uk-timeline-item .uk-timeline-icon .uk-badge {
-		margin-top: 20px;
-    width: 40px;
-    height: 40px;
-}
-
-.uk-timeline .uk-timeline-item .uk-timeline-content {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    padding: 0 0 0 1rem;
-} */

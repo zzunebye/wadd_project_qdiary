@@ -11,7 +11,8 @@
 
 
     <script defer async src="map.js"></script>
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Document</title>
@@ -21,13 +22,18 @@
             width: 100%;
             visibility: hidden;
         }
+        .addjour{
+            background-color: #a5bdd0;
+            border-radius: 20px;
+            font-family: 'Karla', sans-serif;
+        }
     </style>
 </head>
 
 <body>
-    <!-- <div id="mainContent" class="d-flex m-auto flex-column justify-content-center w-75 px-5 border border-primary"> -->
+    
 
-    <form method="POST" action="./model/addQurantine.php" class="w-75 p-2 d-flex flex-column m-auto px-5 justify-content-center border border-primary rounded">
+    <form method="POST" action="./model/addQurantine.php" class="w-75 p-2 d-flex flex-column m-auto px-5 justify-content-center bor shadow addjour">
         <h2 class="text-center">
             Start Your Journey Here!
         </h2>

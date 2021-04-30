@@ -2,7 +2,7 @@
 
 function getRecordedDates()
 {
-    // echo nl2br("addQuarantine()\n\n");
+   
     require_once('./dbconn.php');
     $qid = $_SESSION['current_q'];
 
@@ -11,9 +11,7 @@ function getRecordedDates()
         or die(mysqli_error($conn));
     $row = mysqli_fetch_array($result);
 
-    // return $row;
-   
-    // header("location: ../home.php");
+    
 }
 
 

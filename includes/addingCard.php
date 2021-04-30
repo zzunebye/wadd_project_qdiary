@@ -10,15 +10,27 @@
 
 
     <script defer async src="map.js"></script>
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <title>Document</title>
+    <style>
+        
+        .addjour{
+            background-color: #a5bdd0;
+            border-radius: 20px;
+            font-family: 'Karla', sans-serif;
+        }
+        h2{
+            font-family: 'Karla', sans-serif;
+        }
+    </style>
 </head>
 <body>
         <div class="mb-3">
-            <form id="mainContent" method="POST" action="./model/addCard.php" enctype="multipart/form-data" class="d-flex p-2 m-auto flex-column justify-content-center w-75 px-5 border border-primary rounded">
+            <form id="mainContent" method="POST" action="./model/addCard.php" enctype="multipart/form-data" class="d-flex p-2 m-auto flex-column justify-content-center w-75 px-5 shadow addjour">
                 <div>
-                    <h2 class="text-center b5">Add Card for Today!</h2>
+                    <h2 class="text-center b5" style="padding: 20px;">Add Card for Today!</h2>
                 </div>
                 <div class="mb-3">
                     <input class="form-control" name="title" id="exampleFormControlTextarea1" placeholder="Write the title..." rows="1" required></input>

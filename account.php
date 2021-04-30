@@ -10,12 +10,7 @@
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
-        /* #map {
-            height: 400px;
-            width: 100%;
-            visibility: hidden;
-        } */
-
+     
         .card.cardQuar {
             cursor: pointer;
         }

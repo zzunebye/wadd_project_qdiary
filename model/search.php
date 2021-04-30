@@ -9,7 +9,7 @@ function searchByName()
     require_once('./dbconn.php');
     $name = $_POST['name'];
     $option = $_POST['option'];
-    // $query = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM user";
+
     if ($option == 'Name') {
         # code...
         $query = "SELECT first_name, last_name, user_id ,CONCAT(first_name, ' ', last_name) AS full_name FROM user WHERE CONCAT(first_name, ' ', last_name) LIKE '%$name%'";
@@ -51,10 +51,7 @@ function searchByName()
     }
 
 
-    // echo json_encode($_POST['option']);
-
-
-    //Print array in JSON format
+   
 }
 searchByName();
 

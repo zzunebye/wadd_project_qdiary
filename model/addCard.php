@@ -8,8 +8,7 @@
     $date = date('Y-m-d h:i:s');
     $image = $_FILES['image']['name'];
     $email = $_SESSION['useremail'];
-    // echo $email;
-    // get current user id
+    
     $sql = "SELECT user_id FROM user WHERE email = '$email'";
     $result = $conn->query($sql);
     $count = mysqli_num_rows($result);

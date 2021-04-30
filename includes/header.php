@@ -20,9 +20,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="./journal.php" style="color:#fff;">My Journey</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="#">Setting</a>
-                    </li> -->
+                    
                 </ul>
                 <ul class="navbar-nav  d-flex justify-content-end">
                     <li class="nav-item dropdown">
