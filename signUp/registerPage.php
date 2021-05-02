@@ -37,7 +37,7 @@
             $_SESSION["firstname"] = $firstname;
             $_SESSION["isLogin"] = 1;
             $_SESSION['current_q'] = 0;
-            header("location: ../home.php");
+            header("location: ../index.php");
         }
     }
 ?>

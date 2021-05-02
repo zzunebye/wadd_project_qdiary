@@ -27,7 +27,7 @@
             $_SESSION["isLogin"] = 1;
             
 
-            header("Location:../home.php");
+            header("Location:../index.php");
         }
     }else{
         header("Location:../signup/registerpage.php");

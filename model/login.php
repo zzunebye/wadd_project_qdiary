@@ -62,7 +62,7 @@ function Login()
     } else {
         $_SESSION['current_q'] = 0;
     }
-    // header("location: ../home.php");
+    // header("location: ../index.php");
 
 }
 

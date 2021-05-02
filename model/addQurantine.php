@@ -95,7 +95,7 @@ function addQuarantine()
     $duration = $row['duration'];
     $qid = $row['quarantine_id'];
     $_SESSION['current_q'] = $row['quarantine_id'];
-    header("location: ../home.php");
+    header("location: ../index.php");
     
 }
 

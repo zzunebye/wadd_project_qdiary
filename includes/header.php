@@ -15,7 +15,7 @@
                 <a class="navbar-brand " style="color:#fff;">Q Journal</a>
                 <ul class="navbar-nav d-flex justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./home.php" style="color:#fff;">Home</a>
+                        <a class="nav-link" aria-current="page" href="./index.php" style="color:#fff;">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./journal.php" style="color:#fff;">My Journey</a>
